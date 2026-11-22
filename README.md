@@ -145,6 +145,15 @@ Local URLs:
    - `FRONTEND_URL`
 4. Restart the API and use **Continue with Google** on the login or registration page.
 
+## Deploying the frontend to Vercel
+
+1. Push a revision that contains the root `package.json`, `package-lock.json`, and both `apps/web` and `apps/api` directories.
+2. Import the repository in Vercel with the **Root Directory** set to the repository root (`.`).
+3. Set `NEXT_PUBLIC_API_URL` to the public origin of the separately deployed API (for example, `https://api.example.com`).
+4. Configure the API's `CORS_ORIGIN` and `FRONTEND_URL` to match the Vercel deployment URL.
+
+The root `vercel.json` overrides the monorepo's all-app build with `npm run build:web`; Vercel deploys the Next.js frontend only. The NestJS API and PostgreSQL database must be hosted separately. The Vercel build log for commit `409d8f6` reports that no npm workspaces were found because that revision does not contain either app directory; deploying a revision with the complete project tree is required.
+
 ## Production Documentation
 
 - [Deployment guide](DEPLOYMENT.md)
